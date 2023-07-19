@@ -8,6 +8,7 @@ class BaseList(mixins.ListModelMixin,
                   mixins.CreateModelMixin,
                   generics.GenericAPIView):
     permission_classes = [permissions.IsAuthenticated]
+    parser_classes = [parsers.JSONParser, parsers.MultiPartParser, parsers.FormParser]
 
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
@@ -19,7 +20,8 @@ class BaseList(mixins.ListModelMixin,
 class BaseDetail(mixins.RetrieveModelMixin,
                     mixins.UpdateModelMixin,
                     mixins.DestroyModelMixin,
-                    generics.GenericAPIView):
+                    generics.GenericAPIView,
+                    ):
     permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request, *args, **kwargs):

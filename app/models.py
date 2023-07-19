@@ -4,6 +4,8 @@ from django.core import exceptions
 
 
 class User(AbstractUser):
+    role = models.CharField(max_length=32, choices=[(i, i) for i in ["User", "Admin"]], default="User")
+
     @property
     def initials_picture_url(self):
         return f"https://ui-avatars.com/api/?name={self}"
@@ -40,8 +42,19 @@ class Company(models.Model):
         return self.name
     
     @property
+    def department_names(self):
+        return ", ".join([i.name for i in self.departments.all()])
+    
+    @property
     def number_of_employees(self):
         return Employment.objects.filter(company=self).count()
+    
+    def get_form_options(self):
+        return {
+            "departments": {
+                "choices": [(i.pk, str(i)) for i in Department.objects.all()]
+            }
+        }
 
 
 class Employee(models.Model):
@@ -82,3 +95,18 @@ class Employment(models.Model):
     def clean(self) -> None:
         self.validate_department()
         return super().clean()
+    
+    def get_form_options(self):
+        return {
+            "department": {
+                "choices": [(i.pk, str(i)) for i in Department.objects.all()]
+            },
+            "employee": {
+                "choices": [(i.pk, str(i)) for i in Employee.objects.all()]
+            },
+            "company": {
+                "choices": [(i.pk, str(i)) for i in Company.objects.all()]
+            },
+        }
+
+

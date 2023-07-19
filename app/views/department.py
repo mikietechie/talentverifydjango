@@ -1,5 +1,5 @@
 from app.models import Department
-from app.serializers import DepartmentSerializer
+from app.serializers import DepartmentSerializer, DepartmentMiniSerializer
 from app.views.base import BaseDetail, BaseList
 
 
@@ -11,3 +11,5 @@ class DepartmentList(BaseList):
 class DepartmentDetail(BaseDetail):
     queryset = Department.objects.all()
     serializer_class = DepartmentSerializer
+
+

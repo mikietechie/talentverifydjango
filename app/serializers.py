@@ -13,6 +13,15 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = "__all__"
+        extra_kwargs = {'password': {'write_only': True}}
+
+
+class UserAuthSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ("username", "email", "role", "all_permissions", "initials_picture_url", "__str__")
+        extra_kwargs = {'password': {'write_only': True}}
+        
 
 
 class DepartmentMiniSerializer(serializers.ModelSerializer):
@@ -36,7 +45,18 @@ class CompanyMiniSerializer(serializers.ModelSerializer):
 class CompanySerializer(serializers.ModelSerializer):
     class Meta:
         model = Company
-        fields = "__all__"
+        fields = ("id", 
+            "name",
+            "date_of_registration",
+            "registration_number",
+            "address",
+            "departments",
+            "contact_person",
+            "contact_phone",
+            "email_address",
+            "department_names",
+            "number_of_employees"
+        )
 
 
 class EmployeeMiniSerializer(serializers.ModelSerializer):
@@ -61,3 +81,8 @@ class EmploymentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Employment
         fields = "__all__"
+
+
+class FileSerializer(serializers.Serializer):
+    file = serializers.FileField()
+    utype = serializers.CharField()
