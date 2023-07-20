@@ -31,11 +31,12 @@ def upload(request: Request):
             df = pd.read_excel(f)
         elif extension == "json":
             df = pd.read_json(f)
-        status = 200
+        if df is not None:
+            status = 200
     return Response(
         ReturnDict(
         {
-            "file": df.to_string()
+            "file": df.to_string() if df is not None else f"Failed to parse file {file.name}"
         },
         serializer=serializers.Serializer
         ),

@@ -1,5 +1,5 @@
 from app.models import Department
-from app.serializers import DepartmentSerializer, DepartmentMiniSerializer
+from app.serializers import DepartmentSerializer
 from app.views.base import BaseDetail, BaseList
 
 
