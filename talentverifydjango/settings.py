@@ -31,10 +31,7 @@ SECRET_KEY = env["SECRET_KEY"]
 DEBUG = env["DEBUG"] == "1"
 
 ALLOWED_HOSTS = env["ALLOWED_HOSTS"].split(",")
-CORS_ALLOWED_ORIGINS = [
-    "https://talentverify.web.app",
-    "http://localhost:3000",
-]
+CORS_ALLOWED_ORIGINS =  env["CORS_ALLOWED_ORIGINS"].split(",")
 
 
 # Application definition
