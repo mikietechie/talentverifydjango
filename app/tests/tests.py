@@ -114,3 +114,5 @@ class TestViews(TestCase, DataFactory):
     def test_department_delete_view(self):
         res = self.axios.delete(f"/api/department/{self.un_dep.pk}/")
         self.assertEqual(res.status_code, status.HTTP_204_NO_CONTENT)
+
+# TODO : Complete for all other models
