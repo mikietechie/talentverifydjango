@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 import datetime
 
-from dotenv import load_dotenv, dotenv_values
+from dotenv import dotenv_values
 
 env = dotenv_values(".env")
 

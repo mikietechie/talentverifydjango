@@ -9,10 +9,12 @@ django-filter==23.2
 djangorestframework==3.14.0
 djangorestframework-simplejwt==5.2.2
 executing==1.2.0
+gunicorn==21.2.0
 ipython==8.14.0
 jedi==0.18.2
 matplotlib-inline==0.1.6
 numpy==1.25.1
+packaging==23.1
 pandas==2.0.3
 parso==0.8.3
 pickleshare==0.7.5
