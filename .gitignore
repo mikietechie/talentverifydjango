@@ -1,0 +1,13 @@
+*.sqlite3
+*.pyc
+/env
+/.env
+*.env
+*.pem
+/htmlcov
+*.coverage
+*.guide
+/media
+/static
+/env
+*/__pycache__
