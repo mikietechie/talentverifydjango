@@ -1,10 +1,12 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, Group, Permission
 from django.core import exceptions
 
 
+ROLE_OPTIONS = [(i, i) for i in ["User", "Admin"]]
+
 class User(AbstractUser):
-    role = models.CharField(max_length=32, choices=[(i, i) for i in ["User", "Admin"]], default="User")
+    role = models.CharField(max_length=32, choices=ROLE_OPTIONS, default="User")
 
     @property
     def initials_picture_url(self):
@@ -19,6 +21,19 @@ class User(AbstractUser):
         if len(self.password) != 88:
             self.set_password(self.password)
         return super().save(*args, **kwargs)
+    
+    def get_form_options(self):
+        return {
+            "group": {
+                "choices": [(i.pk, str(i)) for i in Group.objects.all()]
+            },
+            "role": {
+                "choices": ROLE_OPTIONS
+            },
+            "user_permissions": {
+                "choices": [(i.pk, str(i)) for i in Permission.objects.all()]
+            }
+        }
 
 
 class Department(models.Model):
@@ -47,7 +62,7 @@ class Company(models.Model):
     
     @property
     def number_of_employees(self):
-        return Employment.objects.filter(company=self).count()
+        return Employment.objects.filter(company=self, date_left=None).count()
     
     def get_form_options(self):
         return {
@@ -92,9 +107,15 @@ class Employment(models.Model):
         if self.company.departments.filter(id=self.department_id).exists():
             raise exceptions.ValidationError("Company does not have the selected department")
     
+    def validate_dates(self):
+        if self.date_left and (self.date_left < self.date_started):
+            raise exceptions.ValidationError("Start and end dates don't make sense!")
+
     def clean(self) -> None:
+        print("Cleaning")
+        super().clean()
         self.validate_department()
-        return super().clean()
+        self.validate_dates()
     
     def get_form_options(self):
         return {

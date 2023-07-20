@@ -29,3 +29,15 @@ def employment_form(request: Request):
         ),
         200
     )
+
+@api_view(["GET"])
+def user_form(request: Request):
+    pk = request.GET.get("id")
+    instance = User.objects.get(id=int(pk)) if pk else User()
+    return Response(
+        ReturnDict(
+        instance.get_form_options(),
+        serializer=serializers.Serializer
+        ),
+        200
+    )

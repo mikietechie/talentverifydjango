@@ -11,5 +11,3 @@ class DepartmentList(BaseList):
 class DepartmentDetail(BaseDetail):
     queryset = Department.objects.all()
     serializer_class = DepartmentSerializer
-
-

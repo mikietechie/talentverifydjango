@@ -89,6 +89,7 @@ class EmploymentSerializer(serializers.ModelSerializer):
             "date_started",
             "date_left",
             "duties",
+            "data"
         )
 
 

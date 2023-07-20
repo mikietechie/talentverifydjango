@@ -1,6 +1,6 @@
 from django.urls import path
 
-from app.views import user, company, department, employee, employment, auth, options, uploads
+from app.views import user, company, department, employee, employment, auth, options, uploads, dashboard
 
 
 urlpatterns = [
@@ -19,6 +19,9 @@ urlpatterns = [
     # FORM OPTIONS
     path("company/form/", options.company_form),
     path("employment/form/", options.employment_form),
+    path("user/form/", options.user_form),
     # UPLOADS
     path("upload/", uploads.upload),
+    # UPLOADS
+    path("admin/", dashboard.admin),
 ]

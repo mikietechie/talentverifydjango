@@ -11,4 +11,3 @@ class CompanyList(BaseList):
 class CompanyDetail(BaseDetail):
     queryset = Company.objects.all()
     serializer_class = CompanySerializer
-    
